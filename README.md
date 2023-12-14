@@ -19,7 +19,7 @@ thus avoiding potential issues related to translation quality and ambiguity.
 We used the data available on [XOR-TyDi](https://nlp.cs.washington.edu/xorqa/)
 
 <p align="middle">
-  <img src="Table.jpg" width="450" />
+  <img src="Table-1.jpg" width="450" />
 </p>
 
 ### Columns
@@ -75,7 +75,7 @@ HNSW constructs a graph structure that enables fast and approximate nearest-neig
 
 The model used is seen below:
 <p align="middle">
-  <img src="LSTM.jpg" width="450" />
+  <img src="LSTM.jpg" width="250" />
 </p>
 
 
@@ -83,21 +83,21 @@ The model used is seen below:
 
 1. The performance of the nearest neighbor search may vary across different methods (NearestNeighbors, AnnoyIndex, hnswlib). Comparing their accuracy, efficiency, and recall rates can help identify the most suitable method. 
 
-|    |   Index_IDS |   NearestNeighbors |   AnnoyIndex |   HNSWLib |   Best_Of_3 |   Neighbours |   SUM |
-|----|-------------|--------------------|--------------|-----------|-------------|--------------|-------|
-|  0 |          44 |                  1 |            1 |         1 |           1 |            2 |     4 |
-|  1 |          44 |                  1 |            1 |         1 |           1 |            5 |     4 |
-|  2 |          44 |                  1 |            1 |         1 |           1 |           10 |     4 |
-|  3 |        1156 |                  1 |            1 |         1 |           1 |            2 |     4 |
-|  4 |        1156 |                  1 |            1 |         1 |           1 |            5 |     4 |
-|  5 |        1156 |                  1 |            1 |         1 |           1 |           10 |     4 |
-|  6 |        2132 |                  1 |            1 |         1 |           1 |            2 |     4 |
-|  7 |        2132 |                  1 |            1 |         1 |           1 |            5 |     4 |
-|  8 |        2132 |                  1 |            1 |         1 |           1 |           10 |     4 |
-|  9 |        9982 |                  1 |            1 |         1 |           1 |            2 |     4 |
-| 10 |        9982 |                  1 |            1 |         1 |           1 |            5 |     4 |
-| 11 |        9982 |                  1 |            1 |         1 |           1 |           10 |     4 |
-| 12 |        9995 |                  1 |            1 |         1 |           1 |            2 |     4 |
+|    |   Index_IDS |   NearestNeighbors |   AnnoyIndex |   HNSWLib |   Best_Of_3 |   Neighbours |
+|----|-------------|--------------------|--------------|-----------|-------------|--------------|
+|  0 |          44 |                  1 |            1 |         1 |           1 |            2 |      
+|  1 |          44 |                  1 |            1 |         1 |           1 |            5 |     
+|  2 |          44 |                  1 |            1 |         1 |           1 |           10 |     
+|  3 |        1156 |                  1 |            1 |         1 |           1 |            2 |     
+|  4 |        1156 |                  1 |            1 |         1 |           1 |            5 |     
+|  5 |        1156 |                  1 |            1 |         1 |           1 |           10 |     
+|  6 |        2132 |                  1 |            1 |         1 |           1 |            2 |     
+|  7 |        2132 |                  1 |            1 |         1 |           1 |            5 |     
+|  8 |        2132 |                  1 |            1 |         1 |           1 |           10 |     
+|  9 |        9982 |                  1 |            1 |         1 |           1 |            2 |     
+| 10 |        9982 |                  1 |            1 |         1 |           1 |            5 |     
+| 11 |        9982 |                  1 |            1 |         1 |           1 |           10 |     
+| 12 |        9995 |                  1 |            1 |         1 |           1 |            2 |     
 
 2. Using a sentence tokenizer from the BERT family offers advantages in tokenizing text into meaningful segments. Instead of the current embedding model that learns embeddings from scratch, leveraging BERT-based tokenization can benefit the process.
 3. Employing exact nearest neighbor search metrics such as cosine similarity or Euclidean distance could refine the search process. 
