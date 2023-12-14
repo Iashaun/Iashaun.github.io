@@ -19,8 +19,7 @@ thus avoiding potential issues related to translation quality and ambiguity.
 We used the data available on [XOR-TyDi](https://nlp.cs.washington.edu/xorqa/)
 
 <p align="middle">
-  <img src="Images/essay_overview.png" width="450" />
-  <img src="Images/promtps.png" width="450" /> 
+  <img src="Images/Table.jpg" width="450" />
 </p>
 
 ### Columns
@@ -49,7 +48,7 @@ For the demo, we only considered less than 1% for quick inference
 Bidirectional LSTM (BiLSTM) is a recurrent neural network used primarily for natural language processing. Unlike standard LSTM, the input flows in both directions, and it’s capable of utilizing information from both sides. It’s also a powerful tool for modeling the sequential dependencies between words and phrases in both directions of the sequence.
 
 <p align="middle">
-  <img src="Images/Screenshots/bilstm-1.png" width="450" /> 
+  <img src="Images/Screenshots/bilstm-1.jpg" width="450" /> 
 </p>
 
 
@@ -76,7 +75,7 @@ HNSW constructs a graph structure that enables fast and approximate nearest-neig
 
 The model used is seen below:
 <p align="middle">
-  <img src="Images/Screenshots/LSTM.png" width="450" />
+  <img src="Images/Screenshots/LSTM.jpg" width="450" />
 </p>
 
 
