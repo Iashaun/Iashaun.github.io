@@ -1,4 +1,4 @@
-# Cross Lingual Innformation Retrieval
+# Cross Lingual Information Retrieval
 
 
 ## Team Members: 
@@ -8,16 +8,15 @@ Shaun Noronha, Sheroz Shaikh
 Our proposed tool is designed to perform cross-lingual information retrieval by extracting
 relevant documents from a large corpus. It operates based on user-specified queries that can be
 provided in any of the seven selected languages: Arabic (Ar), Bengali (Bn), Finnish (Fi),
-Japanese (Ja), Korean (Ko), Russian (Ru), and Telugu (Te). Notably, the tool is capable of
-retrieving the most relevant top-k documents regardless of the language in which the query is
+Japanese (Ja), Korean (Ko), Russian (Ru), and Telugu (Te). Notably, the tool can retrieve the most relevant top-k documents regardless of the language in which the query is
 expressed. This feature obviates the need for machine translation (MT) to translate the query,
 which can sometimes hinder retrieval performance. The tool empowers users to effortlessly
 access relevant documents in multiple languages, streamlining the information retrieval process
 thus avoiding potential issues related to translation quality and ambiguity.
 
 ## Dataset
-### The Hewlett Foundation Data
-We used the data available on [XOR-TyDi]https://nlp.cs.washington.edu/xorqa/
+### Cross-lingual Open-Retrieval Question Answering Data
+We used the data available on [XOR-TyDi](https://nlp.cs.washington.edu/xorqa/)
 
 <p align="middle">
   <img src="Images/essay_overview.png" width="450" />
@@ -28,83 +27,88 @@ We used the data available on [XOR-TyDi]https://nlp.cs.washington.edu/xorqa/
 
 | Column |Description|
 |-------|--------|
-| essay_set | 1-8, an id for each set of essays |
-| essay | The ascii text of a student's response |
-| rater1 domain1 | Rater 1's domain 1 score |
-| rater2 domain2 | Rater 2's domain 1 score |
-| domain1_score |  Resolved score between the raters; all essays have this | 
+| Query | Queries in various languages |
+| Correct Answers /Document | Correct answers for the documents |
+| Incorrect Answers /Document | Incorrect answers for the documents |
 
 ## Exploratory Data Analysis
 
-### Essay Set Distribution 
-
-Essays are not equally distributed in the dataset. Different essay sets have different number of essays available. 
-
-The scores for each prompt have different scoring criteria. Minimum and Maximum score that can be graded for each essay is different.
-
-<p align="middle">
-  <img src="Images/essay_boxplot.png" width="450" />
-  <img src="Images/essay_pie.png" width="450" /> 
-</p>
-
+Among the datasets assessed for this project, the selected dataset stands out due to its unique inclusion of random instances and nuanced complexities essential for mirroring real-world scenarios. This dataset was specifically chosen for its ability to provide a comprehensive view of unpredictable and varied data patterns, ensuring our model learns from a spectrum of examples, rather than fixating on specific biases or patterns. By leveraging this dataset, our project aims to equip the model with adaptability to unforeseen scenarios, enabling it to comprehend subtle variations and edge cases commonly encountered in practical applications, thereby enhancing its robustness in real-world deployments
 
 ## Implementation
 
-Since we are using a Dataset from a kaggle competition, we were unable to to get the true Y values for the test data. We split the trainng data as follows to get the training and test data.
+We used the data for our model as
 
 **Training Data** 80% of the Data.
 **Test Data** 20% of the Data.
 
+For the demo, we only considered less than 1% for quick inference
 
-### Embedding + LSTM
-The LSTM method utilizes Word2Vec to convert the essays into word embeddings. These vectors are then sent through an LSTM-based model which assigns it a final score. The model summary can be seen below:
+### Bidirectional LSTM
+
+Bidirectional LSTM (BiLSTM) is a recurrent neural network used primarily for natural language processing. Unlike standard LSTM, the input flows in both directions, and it’s capable of utilizing information from both sides. It’s also a powerful tool for modeling the sequential dependencies between words and phrases in both directions of the sequence.
+
 <p align="middle">
-  <img src="LSTM/Screenshots/Model Summary.png" width="450" /> 
+  <img src="Images/Screenshots/bilstm-1.png" width="450" /> 
 </p>
 
-This model is then trained using a 5-fold Cross-Validation technique, and the average Kappa is calculated.
 
-The results for this procedure are seen below:
-<p align="middle">
-  <img src="LSTM/Screenshots/Final Result.png" width="450" />
-</p>
+### Nearest-Neighbours
+
+A nearest-neighbors model is a technique used for searching and retrieving similar items or data points from a dataset based on their similarity to a query item. It operates on the principle that items that are close or similar in a feature space should also be similar in their inherent characteristics or properties.
+
+The nearest-neighbors model works by organizing the dataset into a structure that efficiently retrieves the nearest or most similar items to a given query. 
+
 
 ### Annoy
 
-Annoy (Approximate Nearest Neighbors Something Something) is a C++ library with Python bindings to search for points in space that are close to a given query point. It also creates large read-only file-based data structures that are mmapped into memory so that many processes may share the same data.
+Annoy is a library used for approximate nearest-neighbor search. It's particularly useful when dealing with high-dimensional data and finding nearest neighbors efficiently. The library provides a data structure and algorithms that enable fast approximate searches for nearest neighbors, especially in very large datasets.
+
+It uses random projections to build trees that represent the data in a way that allows for quick lookup of approximate nearest neighbors. It's commonly used in tasks involving recommendation systems, information retrieval, clustering, and other machine-learning applications where finding similar items or data points efficiently is crucial.
+
+### HnswLib
+
+HNSW (Hierarchical Navigable Small World) is a library used for approximate nearest neighbor search, similar to Annoy. It's designed to efficiently locate approximate nearest neighbors in high-dimensional spaces, especially in scenarios where traditional methods might struggle due to the curse of dimensionality.
+
+HNSW constructs a graph structure that enables fast and approximate nearest-neighbor searches by forming a hierarchical graph that organizes the data points. It builds a navigable small-world graph, which efficiently connects data points in a way that maintains both local and global connectivity, allowing for quick search operations while approximating the nearest neighbors.
 
 #### Model Design
-<p align="middle">
-  <img src="Images/flowchart.png" />
-</p>
 
-Following Quadratic Weighted Kappa was obtained - 
-
+The model used is seen below:
 <p align="middle">
-  <img src="Images/results.png" />
+  <img src="Images/Screenshots/LSTM.png" width="450" />
 </p>
 
 
-## Conclusion
+## Conclusion & Future Work
 
-1. LSTM model performed better than the BERT model. 
-2. Quadratic Weighted Kappa of LSTM was higher than that of BERT Model. The higher the kappa value, the better model’s prediction aligns with human-graded scores
-3. Further optimizations in our hyperparameters or architecture in BERT Model could lead better results.
-4. Bert was trained for 100 epochs, training for higher numbers of epochs could also lead to better results.
+1. The performance of the nearest neighbor search may vary across different methods (NearestNeighbors, AnnoyIndex, hnswlib). Comparing their accuracy, efficiency, and recall rates can help identify the most suitable method. 
 
-| | LSTM | Bert |
-|-------|--------|--------|
-| Quadratic Weighted Kappa | 0.94 | 0.6615 |
+|    |   Index_IDS |   NearestNeighbors |   AnnoyIndex |   HNSWLib |   Best_Of_3 |   Neighbours |   SUM |
+|----|-------------|--------------------|--------------|-----------|-------------|--------------|-------|
+|  0 |          44 |                  1 |            1 |         1 |           1 |            2 |     4 |
+|  1 |          44 |                  1 |            1 |         1 |           1 |            5 |     4 |
+|  2 |          44 |                  1 |            1 |         1 |           1 |           10 |     4 |
+|  3 |        1156 |                  1 |            1 |         1 |           1 |            2 |     4 |
+|  4 |        1156 |                  1 |            1 |         1 |           1 |            5 |     4 |
+|  5 |        1156 |                  1 |            1 |         1 |           1 |           10 |     4 |
+|  6 |        2132 |                  1 |            1 |         1 |           1 |            2 |     4 |
+|  7 |        2132 |                  1 |            1 |         1 |           1 |            5 |     4 |
+|  8 |        2132 |                  1 |            1 |         1 |           1 |           10 |     4 |
+|  9 |        9982 |                  1 |            1 |         1 |           1 |            2 |     4 |
+| 10 |        9982 |                  1 |            1 |         1 |           1 |            5 |     4 |
+| 11 |        9982 |                  1 |            1 |         1 |           1 |           10 |     4 |
+| 12 |        9995 |                  1 |            1 |         1 |           1 |            2 |     4 |
 
+2. Using a sentence tokenizer from the BERT family offers advantages in tokenizing text into meaningful segments. Instead of the current embedding model that learns embeddings from scratch, leveraging BERT-based tokenization can benefit the process.
+3. Employing exact nearest neighbor search metrics such as cosine similarity or Euclidean distance could refine the search process. 
 
 ## GitHub Repository -  
 
 Here is the link for the [repository](https://github.com/Iashaun/Iashaun.github.io-Cross-Lingual-Information-Retrieval-CLIR-)
 
-) 
-
 ### References
-We took inspiration from the following papers and worked on out project
+We took inspiration from the following papers and worked on our project
 
 1. Shengyao Z., Linjun S., Guido Z. (2023). Augmenting Passage Representations with Query Generation for
 Enhanced Cross-Lingual Dense Retrieval. SIGIR (2023), https://doi.org/10.48550/arXiv.2305.03950
