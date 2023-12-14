@@ -5,13 +5,19 @@
 Shaun Noronha, Sheroz Shaikh
 
 ## Background and Motivation
-In any language exam, the ability to write composition is an essential indicator of academic performance. However, assessing these essays is a difficult task. The demand for objective and speedy scoring has prompted the development of a tool that can evaluate essays.
-
-There has been a substantial amount of study on the topic of automated essay scoring. One of the early publications uses logistic regression and SVMs on essay representations to get a decision boundary. These models treat the problem as a multi-class classification task. Due to the recent developments in deep learning models and word embedding techniques, there has been significant improvement in the performance of Automated Essay Scoring tools.
+Our proposed tool is designed to perform cross-lingual information retrieval by extracting
+relevant documents from a large corpus. It operates based on user-specified queries that can be
+provided in any of the seven selected languages: Arabic (Ar), Bengali (Bn), Finnish (Fi),
+Japanese (Ja), Korean (Ko), Russian (Ru), and Telugu (Te). Notably, the tool is capable of
+retrieving the most relevant top-k documents regardless of the language in which the query is
+expressed. This feature obviates the need for machine translation (MT) to translate the query,
+which can sometimes hinder retrieval performance. The tool empowers users to effortlessly
+access relevant documents in multiple languages, streamlining the information retrieval process
+thus avoiding potential issues related to translation quality and ambiguity.
 
 ## Dataset
 ### The Hewlett Foundation Data
-We used the data available on [Kaggle](https://www.kaggle.com/competitions/asap-aes/data) Competition conducted by The Hewlett Foundation. There are eight essay sets available for this competition. A single prompt was used to produce each batch of essays. 
+We used the data available on [XOR-TyDi]https://nlp.cs.washington.edu/xorqa/
 
 <p align="middle">
   <img src="Images/essay_overview.png" width="450" />
@@ -63,12 +69,9 @@ The results for this procedure are seen below:
   <img src="LSTM/Screenshots/Final Result.png" width="450" />
 </p>
 
-### BERT Model
+### Annoy
 
-A Transformer based BERT base model followed by two fully connected feed forward layers and a final dense layer was implemented. Unlike LSTMs which process each sequence element in turn, the Transformer processes all elements at the same time by using an attention mechanism to build direct connections between individual elements. 
-
-Raw essay texts are transformed into three embeddings using a pre-trained BERT text tokenizer. It converts raw text into following embeddings - 
-Position Embeddings, Segment Embeddings and Token Embeddings. These embedding tensors are then passed to pretrained encoder of BERT model. The encoded output is then passed on to 3 Fully Connected feedforward layers each with 1024, 512 and 1 neurons. Final output layer has a sigmoid activation which outputs a value between 0 and 1.
+Annoy (Approximate Nearest Neighbors Something Something) is a C++ library with Python bindings to search for points in space that are close to a given query point. It also creates large read-only file-based data structures that are mmapped into memory so that many processes may share the same data.
 
 #### Model Design
 <p align="middle">
@@ -96,9 +99,16 @@ Following Quadratic Weighted Kappa was obtained -
 
 ## GitHub Repository -  
 
-Here is the link for the [repository](https://github.com/kratikashetty/CS547-Information-Retrieval) 
+Here is the link for the [repository](https://github.com/Iashaun/Iashaun.github.io-Cross-Lingual-Information-Retrieval-CLIR-)
+
+) 
 
 ### References
-1. https://www.analyticsvidhya.com/blog/2021/12/googles-bert/
-2. https://towardsdatascience.com/understanding-bert-bidirectional-encoder-representations-from-transformers-45ee6cd51eef
-3. https://towardsdatascience.com/how-to-use-bert-from-the-hugging-face-transformer-library-d373a22b0209
+We took inspiration from the following papers and worked on out project
+
+1. Shengyao Z., Linjun S., Guido Z. (2023). Augmenting Passage Representations with Query Generation for
+Enhanced Cross-Lingual Dense Retrieval. SIGIR (2023), https://doi.org/10.48550/arXiv.2305.03950
+2. Zhuolin J., El-Jaroudi A., William H., Damianos K., Lingjun Z. (2020). Cross-lingual Information Retrieval with
+BERT. https://doi.org/10.48550/arXiv.2004.13005
+3. Yulong Li, Martin Franz, Md Arafat Sultan, Bhavani Iyer, Young-Suk Lee, Avirup Sil (2022). Learning
+Cross-Lingual IR from an English Retriever. NAACL (2022), https://doi.org/10.48550/arXiv.2112.08185
